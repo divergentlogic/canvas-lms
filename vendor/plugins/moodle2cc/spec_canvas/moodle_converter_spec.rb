@@ -66,6 +66,20 @@ describe Moodle::Converter do
     page.url.should == 'new-wiki-new-wiki'
   end
 
+  it "should convert quizzes" do
+    @course.import_from_migration(@course_data, nil, @cm)
+    @course.quizzes.count.should == 3
+  end
+
+  it "should convert Moodle Choice module to a quiz" do
+    @course.import_from_migration(@course_data, nil, @cm)
+    quiz = @course.quizzes.find_by_title "My Choice"
+    quiz.quiz_questions.count.should == 1
+    question = quiz.quiz_questions.first
+    question.question_data[:question_name].should == "My Choice"
+    question.question_data[:question_text].should == "What is your choice?"
+  end
+
   it "should successfully import the course" do
     @course.import_from_migration(@course_data, nil, @cm)
 
