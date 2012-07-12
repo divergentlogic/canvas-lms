@@ -40,6 +40,32 @@ describe Moodle::Converter do
     assignment.description.should == "<p>Use `rails new` to create your first Rails site</p>"
   end
 
+  it "should convert wikis" do
+    # must run twice for link references
+    WikiPage.process_migration(@course_data, @cm)
+    WikiPage.process_migration(@course_data, @cm)
+
+    @cm.migration_settings[:warnings].should be_nil
+    wiki = @course.wiki
+    wiki.should_not be_nil
+    wiki.wiki_pages.count.should == 3
+
+    page = wiki.wiki_pages[0]
+    page.title.should == "My Wiki"
+    page.url.should == 'my-wiki-my-wiki'
+    html = Nokogiri::HTML(page.body)
+    href = html.search('a').first.attributes['href'].value
+    href.should == "/courses/#{@course.id}/wiki/my-wiki-link"
+
+    page = wiki.wiki_pages[1]
+    page.title.should == "link"
+    page.url.should == 'my-wiki-link'
+
+    page = wiki.wiki_pages[2]
+    page.title.should == "New Wiki"
+    page.url.should == 'new-wiki-new-wiki'
+  end
+
   it "should successfully import the course" do
     @course.import_from_migration(@course_data, nil, @cm)
 
