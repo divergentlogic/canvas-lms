@@ -195,6 +195,86 @@ describe Moodle::Converter do
       quiz.quiz_questions.count.should == 10
     end
 
+    it "should convert Moodle Questionnaire Check Boxes Question to Canvas multiple_answers_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[0]
+      question.question_data[:question_name].should == "Check Boxes Question"
+      question.question_data[:question_text].should == "Check Boxes Question Text"
+      question.question_data[:question_type].should == 'multiple_answers_question'
+    end
+
+    it "should convert Moodle Questionnaire Date Question to Canvas essay_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[1]
+      question.question_data[:question_name].should == "Date Question"
+      question.question_data[:question_text].should == "Date Question Text"
+      question.question_data[:question_type].should == 'essay_question'
+    end
+
+    it "should convert Moodle Questionnaire Dropdown Box Question to Canvas multiple_choice_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[2]
+      question.question_data[:question_name].should == "Dropdown Box Question"
+      question.question_data[:question_text].should == "Dropdown Box Question Text"
+      question.question_data[:question_type].should == 'multiple_choice_question'
+    end
+
+    it "should convert Moodle Questionnaire Essay Box Question to Canvas essay_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[3]
+      question.question_data[:question_name].should == "Essay Box Question"
+      question.question_data[:question_text].should == "Essay Box Question Text"
+      question.question_data[:question_type].should == 'essay_question'
+    end
+
+    it "should convert Moodle Questionnaire Label to Canvas text_only_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[4]
+      question.question_data[:question_name].should == ""
+      question.question_data[:question_text].should == "Label Text"
+      question.question_data[:question_type].should == 'text_only_question'
+    end
+
+    it "should convert Moodle Questionnaire Numeric Question to Canvas numerical_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[5]
+      question.question_data[:question_name].should == "Numeric Question"
+      question.question_data[:question_text].should == "Numeric Question Text"
+      question.question_data[:question_type].should == 'numerical_question'
+    end
+
+    it "should convert Moodle Questionnaire Radio Buttons Question to Canvas multiple_choice_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[6]
+      question.question_data[:question_name].should == "Radio Buttons Question"
+      question.question_data[:question_text].should == "Radio Buttons Question Text"
+      question.question_data[:question_type].should == 'multiple_choice_question'
+    end
+
+    it "should convert Moodle Questionnaire Rate Scale 1..5 Question to Canvas multiple_dropdowns_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[7]
+      question.question_data[:question_name].should == "Rate Scale 1..5 Question"
+      question.question_data[:question_text].should == "Rate Scale 1..5 Question Text\nquestion1 [response1]\nquestion2 [response2]\nquestion3 [response3]"
+      question.question_data[:question_type].should == 'multiple_dropdowns_question'
+    end
+
+    it "should convert Moodle Questionnaire Text Box Question to Canvas essay_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[8]
+      question.question_data[:question_name].should == "Text Box Question"
+      question.question_data[:question_text].should == "Text Box Question Text"
+      question.question_data[:question_type].should == 'essay_question'
+    end
+
+    it "should convert Moodle Questionnaire Yes/No Question to Canvas true_false_question" do
+      quiz = @course.quizzes.find_by_title "My Questionnaire"
+      question = quiz.quiz_questions[9]
+      question.question_data[:question_name].should == "Yes No Question"
+      question.question_data[:question_text].should == "Yes No Question Text"
+      question.question_data[:question_type].should == 'true_false_question'
+    end
+
     it "should convert Moodle Choice module to a quiz" do
       quiz = @course.quizzes.find_by_title "My Choice"
       quiz.should_not be_nil
