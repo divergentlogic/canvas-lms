@@ -201,7 +201,7 @@ describe Moodle::Converter do
       quiz.quiz_questions.count.should == 1
       question = quiz.quiz_questions.first
       question.question_data[:question_name].should == "My Choice"
-      question.question_data[:question_text].should == "What is your choice?"
+      question.question_data[:question_text].should == "Which one will you choose?"
     end
   end
 end
