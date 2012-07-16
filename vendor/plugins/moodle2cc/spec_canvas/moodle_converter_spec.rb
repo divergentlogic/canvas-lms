@@ -49,11 +49,21 @@ describe Moodle::Converter do
     end
 
     it "should convert assignments" do
-      @course.assignments.count.should == 5
+      @course.assignments.count.should == 6
 
       assignment = @course.assignments.find_by_title 'Create a Rails site'
       assignment.should_not be_nil
       assignment.description.should == "<p>Use `rails new` to create your first Rails site</p>"
+    end
+
+    it "should convert Moodle Workshop to peer reviewed assignment" do
+      assignment = @course.assignments.find_by_title 'My Workshop'
+      assignment.should_not be_nil
+      assignment.description.should == "<p>My Workshop Description</p>"
+      assignment.peer_reviews.should be_true
+      assignment.automatic_peer_reviews.should be_true
+      #assignment.anonymous_peer_reviews.should be_false
+      assignment.peer_review_count.should == 5
     end
   end
 
