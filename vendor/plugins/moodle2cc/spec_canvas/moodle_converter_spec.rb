@@ -33,9 +33,13 @@ describe Moodle::Converter do
     end
 
     it "should convert discussion topics" do
-      @course.discussion_topics.count.should == 1
+      @course.discussion_topics.count.should == 2
 
       dt = @course.discussion_topics.first
+      dt.title.should == "General Forum"
+      dt.message.should == "<p>General Forum Introduction</p>"
+
+      dt = @course.discussion_topics.last
       dt.title.should == "News forum"
       dt.message.should == "<p>General news and announcements</p>"
     end
