@@ -119,7 +119,8 @@ describe Moodle::Converter do
     it "should convert Moodle Quiz module to a quiz" do
       quiz = @course.quizzes.find_by_title "First Quiz"
       quiz.should_not be_nil
-      #quiz.description.should match /Pop quiz hot shot/
+      quiz.description.should match /Pop quiz hot shot/
+      quiz.quiz_type.should == 'practice_quiz'
       quiz.quiz_questions.count.should == 9
     end
 
@@ -206,6 +207,8 @@ describe Moodle::Converter do
     it "should convert Moodle Questionnaire module to a quiz" do
       quiz = @course.quizzes.find_by_title "My Questionnaire"
       quiz.should_not be_nil
+      quiz.description.should match /Questionnaire Summary/
+      quiz.quiz_type.should == 'survey'
       quiz.quiz_questions.count.should == 10
     end
 
@@ -292,6 +295,8 @@ describe Moodle::Converter do
     it "should convert Moodle Choice module to a quiz" do
       quiz = @course.quizzes.find_by_title "My Choice"
       quiz.should_not be_nil
+      quiz.description.should match /Which one will you choose\?/
+      quiz.quiz_type.should == 'survey'
       quiz.quiz_questions.count.should == 1
       question = quiz.quiz_questions.first
       question.question_data[:question_name].should == "My Choice"
