@@ -7,7 +7,7 @@ module Moodle
     # This is called by the worker to
     def export(to_export = Canvas::Migration::Migrator::SCRAPE_ALL_HASH)
       #unzip_archive
-      migrator = Moodle2CC::Migrator.new @archive_file.path, @unzipped_file_path
+      migrator = Moodle2CC::Migrator.new @archive_file.path, @unzipped_file_path, 'format' => 'canvas'
       migrator.migrate
 
       @settings[:archive_file] = File.open(migrator.imscc_path)
